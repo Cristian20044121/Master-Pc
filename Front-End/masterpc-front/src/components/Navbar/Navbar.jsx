@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Navbar.css";
 
 const navbar = () => {
   return (
     <div>
       {/* header  */}
-      <header className="nav bg-purple-800 w-100 flex justify-between items-center p-5">
+      <header className="nav bg-purple-800 w-100 flex justify-between items-center p-5 flex-col md:flex-row">
         <img
           className="w-40 rounded-md m-5 cursor-pointer"
           src="https://static.wixstatic.com/media/b15536_d90815eea4364f76b370efd2a4905c97~mv2.png/v1/fit/w_2500,h_1330,al_c/b15536_d90815eea4364f76b370efd2a4905c97~mv2.png"
