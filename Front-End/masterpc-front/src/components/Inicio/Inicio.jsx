@@ -29,6 +29,20 @@ const Inicio = () => {
     obtenerProductos();
   }, []);
 
+  // Filtrar categoria 
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.options[event.target.selectedIndex].text);
+  };
+
+  const filteredProductos = productos.filter(
+    (producto) =>
+      selectedCategory === "" || producto.category === selectedCategory
+  );
+
+  // Rest of your code
+
   return (
     // introduccion
     // border-2 border-red-500
@@ -110,17 +124,21 @@ const Inicio = () => {
             name=""
             id=""
             className="bg-blue-800 text-white rounded p-3 md:p-5 cursor-pointer md:mt-0"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
           >
             <option value="0">CATEGORIA</option>
             <option value="1">cpu</option>
             <option value="2">Mouse</option>
             <option value="3">Monitores</option>
-            <option value="4">cpu + monitor</option>
+            <option value="4">Cpu + monitor</option>
             <option value="5">Combo</option>
             <option value="6">Cámaras</option>
             <option value="7">Audífonos</option>
             <option value="8">Sillas</option>
             <option value="9">Micrófono</option>
+            <option value="10">Teclados</option>
+
           </select>
 
           <div className="flex mt-4 md:mt-0">
@@ -141,9 +159,12 @@ const Inicio = () => {
 
         {/* container cards  */}
         <div className="bg-black p-5 mt-10">
-        <h2 className="text-white text-4xl md:text-5xl lg:text-6xl text-center my-8 mx-4 md:mx-20 lg:mx-20"> Nuestros Productos De Alta Calidad </h2>
+          <h2 className="text-white text-4xl md:text-5xl lg:text-6xl text-center my-8 mx-4 md:mx-20 lg:mx-20">
+            {" "}
+            Nuestros Productos De Alta Calidad{" "}
+          </h2>
           <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto">
-            {productos.map((producto) => (
+            {filteredProductos.map((producto) => (
               <div
                 key={producto.id}
                 class="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
@@ -195,6 +216,78 @@ const Inicio = () => {
                 </div>
               </div>
             ))}
+
+            <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto">
+              {filteredProductos.map((producto) =>
+                parseInt(producto.category) >= 1 &&
+                parseInt(producto.category) <= 10 &&
+                (parseInt(producto.category) === parseInt(selectedCategory) ||
+                  selectedCategory === "-1") ? (
+                  <div
+                    key={producto.id}
+                    className="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
+                  >
+                    {/* ... rest of your card component code */}
+
+                    <div
+                      key={producto.id}
+                      class="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
+                    >
+                      <img
+                        class="object-cover w-full h-48"
+                        src={producto.mainPhoto}
+                        alt="Producto"
+                      />
+
+                      <div class="px-6 py-4">
+                        <h3 class="text-xl font-semibold text-gray-800">
+                          {producto.name}
+                        </h3>
+                        <p class="mt-2 text-gray-600">
+                          {producto.longDescription}
+                        </p>
+                      </div>
+
+                      <div class="px-6 pt-2 pb-2">
+                        <span class="text-sm font-semibold text-gray-700">
+                          Precio:
+                        </span>
+                        <span class="text-xl font-bold text-gray-800">
+                          {" "}
+                          ${producto.price}
+                        </span>
+                      </div>
+
+                      <div class="px-6 pt-2 pb-4">
+                        <span class="text-sm font-semibold text-gray-700">
+                          Stock:
+                        </span>
+                        <span class="text-md text-gray-800">
+                          {" "}
+                          {producto.stock}
+                        </span>
+                      </div>
+
+                      <div class="px-6 pb-4">
+                        <span class="text-sm font-semibold text-gray-700">
+                          Categoría:
+                        </span>
+                        <span class="text-md text-gray-800">
+                          {" "}
+                          {producto.category}
+                        </span>
+                      </div>
+
+                      <div class="px-6 pb-4">
+                        <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                          Agregar al carrito
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : null
+              )}
+            </div>
           </div>
         </div>
       </div>
