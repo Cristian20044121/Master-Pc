@@ -3,20 +3,19 @@ import React, { useEffect, useState } from "react";
 const Inicio = () => {
   //estado para almacenar los productos
   const [productos, setProductos] = useState([]);
+  const [inputNombre, setNombre] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  
+const [itemsPerPage] = useState(15);
 
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        // solicitud http al back-end
         const response = await fetch("http://localhost:3001/api/products");
-        console.log(response);
-
-        // const response = await fetch('http://localhost:3000/api/productss')
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
-          // actualizar el estado con los productos obtenidos
           setProductos(data);
         } else {
           console.error("Error al obtener los productos");
@@ -29,19 +28,48 @@ const Inicio = () => {
     obtenerProductos();
   }, []);
 
-  // Filtrar categoria 
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.options[event.target.selectedIndex].text);
+  
+const handleInputChange = (event) => {
+    setNombre(event.target.value);
+    setCurrentPage(1); // Reset current page when input changes
   };
 
+  
+  const handleCategoryChange = (event) => {
+    const selectedValue = event.target.value.trim(); // Trim to remove any extra whitespaces
+    console.log("Selected Category:", selectedValue); // Add this line for debugging
+    setSelectedCategory(selectedValue);
+    setCurrentPage(1); // Reset current page when category changes
+  };
+  
+  // ...
+  
   const filteredProductos = productos.filter(
-    (producto) =>
-      selectedCategory === "" || producto.category === selectedCategory
+    (producto) => {
+      const categoryMatches = selectedCategory === "" || producto.category.toString() === selectedCategory.toString();
+      const nameMatches = inputNombre === "" || producto.name.toLowerCase().includes(inputNombre.toLowerCase());
+      
+      console.log("Category Matches:", categoryMatches); // Add this line for debugging
+      console.log("Name Matches:", nameMatches); // Add this line for debugging
+      
+      return categoryMatches && nameMatches;
+    }
   );
+  
 
-  // Rest of your code
+  
+ 
+const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts =
+    currentPage === 1
+      ? filteredProductos.slice(0, itemsPerPage)
+      : filteredProductos.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
 
   return (
     // introduccion
@@ -118,6 +146,8 @@ const Inicio = () => {
           <input
             className="bg-blue-800 text-white rounded p-3 md:p-5 mb-4 md:mb-0"
             type="text"
+            value={inputNombre}
+            onChange={handleInputChange}
             placeholder="Buscar Producto 🔍"
           />
           <select
@@ -127,7 +157,7 @@ const Inicio = () => {
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
-            <option value="0">CATEGORIA</option>
+            <option value="">CATEGORIA</option>
             <option value="1">cpu</option>
             <option value="2">Mouse</option>
             <option value="3">Monitores</option>
@@ -136,25 +166,10 @@ const Inicio = () => {
             <option value="6">Cámaras</option>
             <option value="7">Audífonos</option>
             <option value="8">Sillas</option>
-            <option value="9">Micrófono</option>
+            <option value="9">Micrófonos</option>
             <option value="10">Teclados</option>
-
           </select>
 
-          <div className="flex mt-4 md:mt-0">
-            <button className="bg-purple-800 rounded p-2 h-8 md:h-10 text-white m-1 md:m-2">
-              1
-            </button>
-            <button className="bg-purple-800 rounded p-2 h-8 md:h-10 text-white m-1 md:m-2">
-              2
-            </button>
-            <button className="bg-purple-800 rounded p-2 h-8 md:h-10 text-white m-1 md:m-2">
-              3
-            </button>
-            <button className="bg-purple-800 rounded p-2 h-8 md:h-10 text-white m-1 md:m-2">
-              4
-            </button>
-          </div>
         </div>
 
         {/* container cards  */}
@@ -164,70 +179,18 @@ const Inicio = () => {
             Nuestros Productos De Alta Calidad{" "}
           </h2>
           <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto">
-            {filteredProductos.map((producto) => (
-              <div
-                key={producto.id}
-                class="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
-              >
-                <img
-                  class="object-cover w-full h-48"
-                  src={producto.mainPhoto}
-                  alt="Producto"
-                />
-
-                <div class="px-6 py-4">
-                  <h3 class="text-xl font-semibold text-gray-800">
-                    {producto.name}
-                  </h3>
-                  <p class="mt-2 text-gray-600">{producto.longDescription}</p>
-                </div>
-
-                <div class="px-6 pt-2 pb-2">
-                  <span class="text-sm font-semibold text-gray-700">
-                    Precio:
-                  </span>
-                  <span class="text-xl font-bold text-gray-800">
-                    {" "}
-                    ${producto.price}
-                  </span>
-                </div>
-
-                <div class="px-6 pt-2 pb-4">
-                  <span class="text-sm font-semibold text-gray-700">
-                    Stock:
-                  </span>
-                  <span class="text-md text-gray-800"> {producto.stock}</span>
-                </div>
-
-                <div class="px-6 pb-4">
-                  <span class="text-sm font-semibold text-gray-700">
-                    Categoría:
-                  </span>
-                  <span class="text-md text-gray-800">
-                    {" "}
-                    {producto.category}
-                  </span>
-                </div>
-
-                <div class="px-6 pb-4">
-                  <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                    Agregar al carrito
-                  </button>
-                </div>
-              </div>
-            ))}
+            {/* { */}
 
             <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto">
               {filteredProductos.map((producto) =>
-                parseInt(producto.category) >= 1 &&
-                parseInt(producto.category) <= 10 &&
-                (parseInt(producto.category) === parseInt(selectedCategory) ||
-                  selectedCategory === "-1") ? (
+    parseInt(producto.category, 10) >= 1 &&
+    parseInt(producto.category, 10) <= 10 &&
+    (producto.category.toString() === selectedCategory.toString() ||
+      selectedCategory === "-1") ? (
                   <div
                     key={producto.id}
                     className="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
                   >
-                    {/* ... rest of your card component code */}
 
                     <div
                       key={producto.id}
@@ -287,9 +250,75 @@ const Inicio = () => {
                   </div>
                 ) : null
               )}
+              
+              <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto">
+  {currentProducts.map((producto) => (
+    <div
+      key={producto.id}
+      className="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
+    >
+      <img
+        className="object-cover w-full h-48"
+        src={producto.mainPhoto}
+        alt="Producto"
+      />
+
+      <div className="px-6 py-4">
+        <h3 className="text-xl font-semibold text-gray-800">
+          {producto.name}
+        </h3>
+        <p className="mt-2 text-gray-600">{producto.longDescription}</p>
+      </div>
+
+      <div className="px-6 pt-2 pb-2">
+        <span className="text-sm font-semibold text-gray-700">Precio:</span>
+        <span className="text-xl font-bold text-gray-800">
+          ${producto.price}
+        </span>
+      </div>
+
+      <div className="px-6 pt-2 pb-4">
+        <span className="text-sm font-semibold text-gray-700">Stock:</span>
+        <span className="text-md text-gray-800"> {producto.stock}</span>
+      </div>
+
+      <div className="px-6 pb-4">
+        <span className="text-sm font-semibold text-gray-700">
+          Categoría:
+        </span>
+        <span className="text-md text-gray-800"> {producto.category}</span>
+      </div>
+
+      <div className="px-6 pb-4">
+        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+          Agregar al carrito
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
+              
             </div>
+            
           </div>
         </div>
+
+        {/* Pagination buttons */}
+<div className="flex justify-center mt-4">
+  {Array.from({ length: Math.ceil(filteredProductos.length / itemsPerPage) }).map((_, index) => (
+    <button
+      key={index}
+      onClick={() => paginate(index + 1)}
+      className={`mx-1 px-3 py-2 bg-purple-800 text-white rounded ${
+        currentPage === index + 1 ? "bg-opacity-80" : ""
+      }`}
+    >
+      {index + 1}
+    </button>
+  ))}
+</div>
+
       </div>
     </div>
   );
