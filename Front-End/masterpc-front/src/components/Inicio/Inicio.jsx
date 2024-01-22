@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+
 
 const Inicio = () => {
   //estado para almacenar los productos
@@ -6,8 +9,11 @@ const Inicio = () => {
   const [inputNombre, setNombre] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  
-const [itemsPerPage] = useState(15);
+
+
+
+
+  const [itemsPerPage] = useState(15);
 
   useEffect(() => {
     const obtenerProductos = async () => {
@@ -28,38 +34,38 @@ const [itemsPerPage] = useState(15);
     obtenerProductos();
   }, []);
 
-  
-const handleInputChange = (event) => {
+
+  const handleInputChange = (event) => {
     setNombre(event.target.value);
     setCurrentPage(1); // Reset current page when input changes
   };
 
-  
+
   const handleCategoryChange = (event) => {
     const selectedValue = event.target.value.trim(); // Trim to remove any extra whitespaces
     console.log("Selected Category:", selectedValue); // Add this line for debugging
     setSelectedCategory(selectedValue);
     setCurrentPage(1); // Reset current page when category changes
   };
-  
+
   // ...
-  
+
   const filteredProductos = productos.filter(
     (producto) => {
       const categoryMatches = selectedCategory === "" || producto.category.toString() === selectedCategory.toString();
       const nameMatches = inputNombre === "" || producto.name.toLowerCase().includes(inputNombre.toLowerCase());
-      
+
       console.log("Category Matches:", categoryMatches); // Add this line for debugging
       console.log("Name Matches:", nameMatches); // Add this line for debugging
-      
+
       return categoryMatches && nameMatches;
     }
   );
-  
 
-  
- 
-const indexOfLastProduct = currentPage * itemsPerPage;
+
+
+
+  const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
   const currentProducts =
     currentPage === 1
@@ -74,6 +80,8 @@ const indexOfLastProduct = currentPage * itemsPerPage;
   return (
     // introduccion
     // border-2 border-red-500
+
+
     <div>
       <div class="flex flex-col md:flex-row w-full justify-between mt-28 p-5">
         <div class="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0">
@@ -86,16 +94,17 @@ const indexOfLastProduct = currentPage * itemsPerPage;
         </div>
 
         {/* <!-- Images --> */}
-        <div class="flex w-full md:w-1/2 mt-10 md:mt-0">
-          <img
-            class="w-1/2 md:w-2/5 lg:w-1/2 xl:w-1/2 mb-4 md:mb-0"
-            src="https://static.wixstatic.com/media/93fb42_1e9fa5872d564640b2808295c3ea7b3c~mv2.png/v1/fill/w_441,h_294,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/93fb42_1e9fa5872d564640b2808295c3ea7b3c~mv2.png"
-            alt="image of product"
-          />
+        <div class="flex w-full md:w-1/2 mt-10 md:mt-0 relative">
 
           <img
             class="w-1/2 h-40 md:w-3/5 lg:w-1/2 xl:w-1/2"
             src="https://static.wixstatic.com/media/93fb42_f2b6a4ef742e47b881941cc52fbc3fec~mv2.png/v1/crop/x_259,y_153,w_1406,h_776/fill/w_247,h_136,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Sin-t%C3%ADtulo-2.png"
+            alt="image of product"
+          />
+
+          <img
+            class="w-1/2 md:w-2/5 lg:w-1/2 xl:w-1/2 mb-4 md:mb-0"
+            src="https://static.wixstatic.com/media/93fb42_1e9fa5872d564640b2808295c3ea7b3c~mv2.png/v1/fill/w_441,h_294,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/93fb42_1e9fa5872d564640b2808295c3ea7b3c~mv2.png"
             alt="image of product"
           />
         </div>
@@ -157,17 +166,17 @@ const indexOfLastProduct = currentPage * itemsPerPage;
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
-            <option value="">CATEGORIA</option>
-            <option value="1">cpu</option>
-            <option value="2">Mouse</option>
-            <option value="3">Monitores</option>
-            <option value="4">Cpu + monitor</option>
-            <option value="5">Combo</option>
-            <option value="6">Cámaras</option>
-            <option value="7">Audífonos</option>
-            <option value="8">Sillas</option>
-            <option value="9">Micrófonos</option>
-            <option value="10">Teclados</option>
+            <option value="">SELECT.CATEGORIA</option>
+            <option value="Cpu">cpu</option>
+            <option value="Mouse">Mouse</option>
+            <option value="Monitores">Monitores</option>
+            <option value="Cpu + monitor">Cpu + monitor</option>
+            <option value="Combo">Combo</option>
+            <option value="Cámaras">Cámaras</option>
+            <option value="Audífonos">Audífonos</option>
+            <option value="Sillas">Sillas</option>
+            <option value="Micrófonos">Micrófonos</option>
+            <option value="Teclados">Teclados</option>
           </select>
 
         </div>
@@ -183,10 +192,10 @@ const indexOfLastProduct = currentPage * itemsPerPage;
 
             <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto">
               {filteredProductos.map((producto) =>
-    parseInt(producto.category, 10) >= 1 &&
-    parseInt(producto.category, 10) <= 10 &&
-    (producto.category.toString() === selectedCategory.toString() ||
-      selectedCategory === "-1") ? (
+                parseInt(producto.category, 10) >= 1 &&
+                  parseInt(producto.category, 10) <= 10 &&
+                  (producto.category.toString() === selectedCategory.toString() ||
+                    selectedCategory === "-1") ? (
                   <div
                     key={producto.id}
                     className="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
@@ -206,9 +215,6 @@ const indexOfLastProduct = currentPage * itemsPerPage;
                         <h3 class="text-xl font-semibold text-gray-800">
                           {producto.name}
                         </h3>
-                        <p class="mt-2 text-gray-600">
-                          {producto.longDescription}
-                        </p>
                       </div>
 
                       <div class="px-6 pt-2 pb-2">
@@ -242,82 +248,81 @@ const indexOfLastProduct = currentPage * itemsPerPage;
                       </div>
 
                       <div class="px-6 pb-4">
-                        <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                          Agregar al carrito
-                        </button>
+                        <Link className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" to={`/ItemDetail/${producto._id}`}>
+
+                          Ver Más Detalles
+                        </Link>
                       </div>
                     </div>
                   </div>
                 ) : null
               )}
-              
+
               <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto">
-  {currentProducts.map((producto) => (
-    <div
-      key={producto.id}
-      className="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
-    >
-      <img
-        className="object-cover w-full h-48"
-        src={producto.mainPhoto}
-        alt="Producto"
-      />
+                {currentProducts.map((producto) => (
+                  <div
+                    key={producto._id}
+                    className="max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105"
+                  >
+                    <img
+                      className="object-cover w-full h-48"
+                      src={producto.mainPhoto}
+                      alt="Producto"
+                    />
 
-      <div className="px-6 py-4">
-        <h3 className="text-xl font-semibold text-gray-800">
-          {producto.name}
-        </h3>
-        <p className="mt-2 text-gray-600">{producto.longDescription}</p>
-      </div>
+                    <div className="px-6 py-4">
+                      <h3 className="text-xl font-semibold text-gray-800">
+                        {producto.name}
+                      </h3>
+                    </div>
 
-      <div className="px-6 pt-2 pb-2">
-        <span className="text-sm font-semibold text-gray-700">Precio:</span>
-        <span className="text-xl font-bold text-gray-800">
-          ${producto.price}
-        </span>
-      </div>
+                    <div className="px-6 pt-2 pb-2">
+                      <span className="text-sm font-semibold text-gray-700">Precio:</span>
+                      <span className="text-xl font-bold text-gray-800">
+                        ${producto.price}
+                      </span>
+                    </div>
 
-      <div className="px-6 pt-2 pb-4">
-        <span className="text-sm font-semibold text-gray-700">Stock:</span>
-        <span className="text-md text-gray-800"> {producto.stock}</span>
-      </div>
+                    <div className="px-6 pt-2 pb-4">
+                      <span className="text-sm font-semibold text-gray-700">Stock:</span>
+                      <span className="text-md text-gray-800"> {producto.stock}</span>
+                    </div>
 
-      <div className="px-6 pb-4">
-        <span className="text-sm font-semibold text-gray-700">
-          Categoría:
-        </span>
-        <span className="text-md text-gray-800"> {producto.category}</span>
-      </div>
+                    <div className="px-6 pb-4">
+                      <span className="text-sm font-semibold text-gray-700">
+                        Categoría:
+                      </span>
+                      <span className="text-md text-gray-800"> {producto.category}</span>
+                    </div>
 
-      <div className="px-6 pb-4">
-        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-          Agregar al carrito
-        </button>
-      </div>
-    </div>
-  ))}
-</div>
+                    <div className="px-6 pb-4">
+                      <Link className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" to={`/ItemDetail/${producto._id}`}>
+                        Ver Más Detalles
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-              
+
             </div>
-            
+
           </div>
         </div>
 
         {/* Pagination buttons */}
-<div className="flex justify-center mt-4">
-  {Array.from({ length: Math.ceil(filteredProductos.length / itemsPerPage) }).map((_, index) => (
-    <button
-      key={index}
-      onClick={() => paginate(index + 1)}
-      className={`mx-1 px-3 py-2 bg-purple-800 text-white rounded ${
-        currentPage === index + 1 ? "bg-opacity-80" : ""
-      }`}
-    >
-      {index + 1}
-    </button>
-  ))}
-</div>
+        <div className="flex justify-center mt-4">
+          {Array.from({ length: Math.ceil(filteredProductos.length / itemsPerPage) }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`mx-1 px-3 py-2 bg-purple-800 text-white rounded ${currentPage === index + 1 ? "bg-opacity-80" : ""
+                }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
 
       </div>
     </div>

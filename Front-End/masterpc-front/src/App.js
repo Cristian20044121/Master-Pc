@@ -6,6 +6,7 @@ import Contacto from "./components/Contacto/Contacto";
 import Nosotros from "./components/Nosotros/Nosotros";
 import Profile from "./components/Profile/Profile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ItemDetail from "./components/ItemDetail/ItemDetail";
 
 function App() {
   return (
@@ -18,11 +19,12 @@ function App() {
           <Route exact path="/Contacto" element={<Contacto />} />
           <Route exact path="/Nosotros" element={<Nosotros />} />
           <Route exact path="/Profile" element={<Profile />} />
+          <Route exact path="//ItemDetail/:productId" element={<ItemDetail />} />
         </Routes>
       </Router>
 
       {/* footer  */}
-      <footer className="bg-purple-800 text-white">
+      <footer className="bg-purple-800 text-white mt-28">
         <div className="flex flex-col md:flex-row justify-between items-center p-2">
           <div className="mb-4 md:mb-0">
             <a href="/">
