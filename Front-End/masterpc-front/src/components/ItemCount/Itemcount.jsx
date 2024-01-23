@@ -2,17 +2,18 @@ import React from 'react'
 import { GrSubtract } from "react-icons/gr";
 import { IoMdAddCircle } from "react-icons/io";
 
-const Itemcount = ({max, cantidad,modify}) => {
+const Itemcount = () => {
+  let cantidad = 0;
 
     const aumentar = () =>{
-        if(cantidad < max) {
-            modify(cantidad + 1);
+        if(cantidad < 0) {
+            cantidad += 1;
             console.log("aumenta")
         }
     }
     const disminuir = () =>{
         if(cantidad > 0) {
-            modify(cantidad - 1);
+            cantidad -= 1;
         }
     }
 

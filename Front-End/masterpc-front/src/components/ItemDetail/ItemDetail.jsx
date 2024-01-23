@@ -35,22 +35,25 @@ const ItemDetail = () => {
   }, [productId]);
 
   if (!product) {
-    return <div>Cargando...</div>;
+    return <div className='text-center color-blue-700 text-4xl'>Cargando...</div>;
   }
   return (
-    
+    <div>
+
+    <h2 className='font-bold text-4xl md:text-5xl lg:text-6xl text-center my-8 mx-4 md:mx-20 lg:mx-20'>¡MASTERPC LOS MEJORES EN ESTO, CON EXCELENTES PRODUCTOS DE CALIDAD!</h2>
+   
 
 
- <div className="bg-white  shadow-lg  flex flex-col mx-auto mt-28 rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105 w-1/2">
- <div className='flex justify-center'>
-      <img className=" w-96 h-auto" src={product.mainPhoto} alt={product.name}/>
-
-        </div>
+ <div key={product.id} className="bg-white  shadow-lg  flex flex-col mx-auto mt-28 rounded-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:scale-105 w-1/2">
+ <h3 className='text-2xl text-gray-800 font-semibold p-2'>Detalles del producto seleccionado:</h3>
     <div className="px-6 py-4">
       <h3 className="text-4xl font-semibold text-gray-800 mb-2 text-center">{product.name}</h3><br></br>
       <p className="text-gray-600 text-2xl">{product.longDescription}</p>
     </div>
+    <div className='flex justify-center'>
+      <img className=" w-75 h-96" src={product.mainPhoto} alt={product.name}/>
 
+        </div>
     <div className="px-6 pt-2 pb-2">
       <span className="text-sm font-semibold text-gray-700 text-2xl">Precio:</span>
       <span className="text-xl font-bold text-gray-800">${product.price}</span>
@@ -84,6 +87,8 @@ const ItemDetail = () => {
     </div>
   </div>
 
+
+  </div>
       )
   }
 
