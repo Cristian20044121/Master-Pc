@@ -166,7 +166,7 @@ const Inicio = () => {
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
-            <option value="">SELECT.CATEGORIA</option>
+            <option value="">SELECCIONAR CATEGORIA</option>
             <option value="Cpu">cpu</option>
             <option value="Mouse">Mouse</option>
             <option value="Monitores">Monitores</option>
@@ -258,7 +258,7 @@ const Inicio = () => {
                 ) : null
               )}
 
-              <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto">
+              <div className="flex flex-wrap justify-between gap-20 w-50 mx-auto p-5">
                 {currentProducts.map((producto) => (
                   <div
                     key={producto._id}

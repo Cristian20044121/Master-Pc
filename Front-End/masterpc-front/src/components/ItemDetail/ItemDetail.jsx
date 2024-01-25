@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2'
+
 import MisCompras from '../MisCompras/MisCompras';
+import Itemcount from '../ItemCount/Itemcount';
 
 const ItemDetail = () => {
+
+  const Toast = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Producto agregado al carrito",
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
+
+
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
   const [cart, setCart] = useState([]);
@@ -32,14 +48,17 @@ const ItemDetail = () => {
   }, []);
 
 
-  const CartProduct = function (id, name, price) {
+  const CartProduct = function (id,mainPhoto, name, price, category) {
     this.id = id;
+    this.mainPhoto = mainPhoto
     this.name = name;
     this.price = price;
+    this.category = category
   };
   
-
   const handleAddToCart = () => {
+    Toast()
+
     const isProductInCart = cart.some(cartItem => cartItem.id === product._id);
   
     if (isProductInCart) {
@@ -47,19 +66,23 @@ const ItemDetail = () => {
         cartItem.id === product._id
           ? { ...cartItem, quantity: cartItem.quantity + 1 }
           : cartItem
+          
       );
       setCart(updatedCart);
-      localStorage.setItem('cartProduct', JSON.stringify(updatedCart));
+  
+      // Actualizar el localStorage después de actualizar el estado
+       localStorage.setItem('cartProduct', JSON.stringify(updatedCart));
     } else {
-      const newCartItem = new CartProduct(product._id, product.name, product.price, 1);
-      setCart([...cart, newCartItem]);
+      const newCartItem =new CartProduct(product._id, product.mainPhoto, product.name, product.price, product.category);
+  
+      setCart(prevCart => [...prevCart, newCartItem]);
+  
+      // Actualizar el localStorage después de actualizar el estado
       localStorage.setItem('cartProduct', JSON.stringify([...cart, newCartItem]));
     }
   };
 
   return (
-    // Resto del código...
-       // Resto del código...
        <div>
        <h2 className='font-bold text-4xl md:text-5xl lg:text-6xl text-center my-8 mx-4 md:mx-20 lg:mx-20'>¡MASTERPC LOS MEJORES EN ESTO, CON EXCELENTES PRODUCTOS DE CALIDAD!</h2>
  
@@ -83,6 +106,7 @@ const ItemDetail = () => {
          <div className="px-6 pb-4">
            <span className="text-sm font-semibold text-gray-700 text-2xl">Categoría:</span>
            <span className="text-md text-gray-800 text-xl">{product?.category}</span>
+           <p> <Itemcount/> </p>
          </div>
          {/* Renderizar Itemcount aquí según sea necesario */}
          <div className="px-6 pb-4">
@@ -96,7 +120,7 @@ const ItemDetail = () => {
              </a>
              <button
                className='px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-8'
-               onClick={() => handleAddToCart(product._id, product.name, product.price)}
+               onClick={() => handleAddToCart(product._id,product?.mainPhoto,product?.name, product?.price, product?.category)}
              >
                Agregar al carrito
              </button>
