@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import Swal from 'sweetalert2'
-
-import MisCompras from '../MisCompras/MisCompras';
-import Itemcount from '../ItemCount/Itemcount';
 
 const ItemDetail = () => {
 
@@ -106,7 +103,6 @@ const ItemDetail = () => {
          <div className="px-6 pb-4">
            <span className="text-sm font-semibold text-gray-700 text-2xl">Categoría:</span>
            <span className="text-md text-gray-800 text-xl">{product?.category}</span>
-           <p> <Itemcount/> </p>
          </div>
          {/* Renderizar Itemcount aquí según sea necesario */}
          <div className="px-6 pb-4">
@@ -124,6 +120,12 @@ const ItemDetail = () => {
              >
                Agregar al carrito
              </button>
+             <a
+               className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 focus:outline-none focus:shadow-outline-blue active:bg-green-900"
+               href="/Miscompras"
+             >
+               Ir Al Carrito
+             </a>
            </div>
          </div>
        </div>
