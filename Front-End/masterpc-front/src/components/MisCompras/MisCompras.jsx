@@ -128,7 +128,7 @@ const MisCompras = () => {
             </a>
             <a
               className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 focus:outline-none focus:shadow-outline-blue active:bg-green-900"
-              href="/Finalizar"
+              href="/FinalizarCompra"
             >
               Terminar Compra
             </a>

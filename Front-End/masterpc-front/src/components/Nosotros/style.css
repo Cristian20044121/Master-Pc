@@ -1,0 +1,10 @@
+.background{
+    background: url('https://i.pinimg.com/originals/75/95/2d/75952ddbecd4743baf83236395b20541.gif');
+    height: 800px;
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+.title-about{
+    text-shadow: 2px 3px 4px blue;
+}
