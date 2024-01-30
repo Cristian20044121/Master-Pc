@@ -3,11 +3,14 @@ import { motion } from 'framer-motion';
 import Swal from "sweetalert2";
 
 const Contacto = () => {
+  /**
+   * animacion libreria motion
+   */
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
-
+  
   const modal = ()=>{
     const { value: formValues } =  Swal.fire({
       title: "Agrega tu información",

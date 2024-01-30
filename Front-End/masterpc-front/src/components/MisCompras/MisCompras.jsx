@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"; //libreria de alertas REACT
 import "./style.css";
 import ItemCount from "../ItemCount/Itemcount";
+import { motion } from "framer-motion"; //libreria motion(animacion)
 
 const MisCompras = () => {
   const [subtotal, setSubtotal] = useState(0);
   const [totalFinal, setTotalFinal] = useState(0);
+
+  /**
+   * animacion libreria motion
+   */
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
 
   const handleSubtotalChange = (newSubtotal) => {
     setSubtotal(newSubtotal);
@@ -53,7 +62,12 @@ const MisCompras = () => {
   };
 
   return (
-    <div className="section-one p-2">
+    <motion.div
+      className="section-one p-2"
+      variants={sectionVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="container mx-auto my-8">
         <h1 className="text-4xl md:text-5xl lg:text-6xl text-center font-bold text-gray-800 my-8 mx-4 md:mx-20 lg:mx-20 mb-6">
           ¡Bienvenido a tus compras!
@@ -67,7 +81,9 @@ const MisCompras = () => {
               <tr>
                 <th className="border border-gray-300 py-2 px-4">Imagen</th>
                 <th className="border border-gray-300 py-2 px-4">Nombre</th>
-                <th className="border border-gray-300 py-2 px-4 text-center">Cantidad</th>
+                <th className="border border-gray-300 py-2 px-4 text-center">
+                  Cantidad
+                </th>
                 <th className="border border-gray-300 py-2 px-4">Eliminar</th>
               </tr>
             </thead>
@@ -135,7 +151,7 @@ const MisCompras = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
