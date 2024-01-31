@@ -22,7 +22,7 @@ const Inicio = () => {
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        const response = await fetch("https://api.render.com/deploy/srv-cmsr6nn109ks73a00jp0?key=du5JgLoTDmA/api/products");
+        const response = await fetch("https://api-masterpc.onrender.com/");
 
         if (response.ok) {
           const data = await response.json();
