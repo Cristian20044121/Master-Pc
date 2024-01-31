@@ -22,9 +22,7 @@ const Inicio = () => {
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        const response = await fetch("https://api-masterpc.onrender.com
-
-");
+        const response = await fetch("https://api-masterpc.onrender.com");
 
         if (response.ok) {
           const data = await response.json();
