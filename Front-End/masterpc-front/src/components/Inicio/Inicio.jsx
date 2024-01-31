@@ -22,7 +22,7 @@ const Inicio = () => {
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        const response = await fetch("https://api-master-pc-rzz8.vercel.app");
+        const response = await fetch("https://api-master-pc-rzz8.vercel.app/api/products");
 
         if (response.ok) {
           const data = await response.json();
