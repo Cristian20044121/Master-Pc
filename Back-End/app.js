@@ -8,7 +8,7 @@ const PORT = config.PORT;
 
 // Configura CORS para permitir solicitudes desde cualquier origen (en desarrollo)
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://master-pc-tkxa.vercel.app/');
+  res.header('Access-Control-Allow-Origin', 'https://master-pc-tkxa-jsmx64yfc-cristian-caros-projects.vercel.app/');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
