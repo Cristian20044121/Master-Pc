@@ -33,7 +33,7 @@ const ItemDetail = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/products/${productId}`
+          `https://api-masterpc.onrender.com/api/products/${productId}`
         );
         if (response.ok) {
           const data = await response.json();
