@@ -30,3 +30,8 @@ La estructura del proyecto sigue las mejores prácticas de organización de arch
 - **sweetalert2:** [sweetalert2](https://sweetalert2.github.io/#declarative-templates) //libreria de alertas React
 - **Framer Motion:** [Framer Motion](https://www.framer.com/motion/) //libreria de animaciones 
 
+## Link de la API que conecta con el front-end 
+- **Github**: [Github] (https://github.com/Cristian20044121/API-masterPC)
+- **API ALOJADA EN LA WEB**: [versión alojada] (https://api-masterpc.onrender.com)
+- En la versión alojada podrás ver todos los productos disponibles hasta la fecha, dichos datos provienen de la base de datos y luego son mandados al Front-end para su correcta visualización. https://api-masterpc.onrender.com/api/products asi podras ver todos
+  los productos, para buscar un producto en especifico usa el siguiente https://api-masterpc.onrender.com/api/products/id agregas el id del producto a buscar para ver si existe.
