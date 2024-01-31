@@ -22,7 +22,7 @@ const Inicio = () => {
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        const response = await fetch("https://api.render.com/deploy/srv-cmsr6nn109ks73a00jp0?key=du5JgLoTDmA");
+        const response = await fetch("https://api.render.com/deploy/srv-cmsr6nn109ks73a00jp0?key=du5JgLoTDmA/api/products");
 
         if (response.ok) {
           const data = await response.json();
