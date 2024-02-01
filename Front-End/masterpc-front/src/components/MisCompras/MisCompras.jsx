@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2"; //libreria de alertas REACT
 import "./style.css";
-import ItemCount from "../ItemCount/Itemcount";
+import ItemCount from "../ItemCount/Itemcount"; //item contador para aumentar producto o disminuir
 import { motion } from "framer-motion"; //libreria motion(animacion)
 
 const MisCompras = () => {
-  const [subtotal, setSubtotal] = useState(0);
-  const [totalFinal, setTotalFinal] = useState(0);
+  const [subtotal, setSubtotal] = useState(0); //estado del subtotal
+  const [totalFinal, setTotalFinal] = useState(0); //estado del total a pagar
 
   /**
    * animacion libreria motion
@@ -16,10 +16,18 @@ const MisCompras = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
 
+  /**
+   * actualiza el subtotal segun lo seleccionado en el contador
+   * @param {*} newSubtotal 
+   */
   const handleSubtotalChange = (newSubtotal) => {
     setSubtotal(newSubtotal);
   };
 
+  /**
+   * actualiza el total segun los productos seleccionados y el calculo del handlesubtotal
+   * @param {*} newTotalFinal 
+   */
   const handleTotalFinalChange = (newTotalFinal) => {
     setTotalFinal(newTotalFinal);
   };
@@ -37,8 +45,11 @@ const MisCompras = () => {
     });
   };
 
-  const [cartItem, setCartItem] = useState([]);
+  const [cartItem, setCartItem] = useState([]); //estado para manejar los productos en carrito
 
+  /**
+   * se maneja para guardar en localStorage los productos previamente agregados o eliminados
+   */
   useEffect(() => {
     // Obtener productos del localStorage
     const storedCart = JSON.parse(localStorage.getItem("cartProduct")) || [];
@@ -64,9 +75,9 @@ const MisCompras = () => {
   return (
     <motion.div
       className="section-one p-2"
-      variants={sectionVariants}
-      initial="hidden"
-      animate="visible"
+      variants={sectionVariants} //animacion
+      initial="hidden" //animacion
+      animate="visible" //animacion
     >
       <div className="container mx-auto my-8">
         <h1 className="text-4xl md:text-5xl lg:text-6xl text-center font-bold text-gray-800 my-8 mx-4 md:mx-20 lg:mx-20 mb-6">
@@ -104,7 +115,7 @@ const MisCompras = () => {
 
                     <td className="border border-gray-300 py-2 px-4 ">
                       <ItemCount
-                        price={product.price}
+                        price={product.price} //se obtiene el precio del producto para calcular subtotal y total
                         onSubtotalChange={handleSubtotalChange}
                         onTotalFinalChange={handleTotalFinalChange}
                       />

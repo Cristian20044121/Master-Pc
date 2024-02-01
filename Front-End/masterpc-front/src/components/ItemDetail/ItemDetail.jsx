@@ -25,10 +25,14 @@ const ItemDetail = () => {
     });
   };
 
-  const [product, setProduct] = useState(null);
-  const { productId } = useParams();
-  const [cart, setCart] = useState([]);
+  const [product, setProduct] = useState(null); //estado del producto a mostrar
+  const { productId } = useParams(); //captura el parametro id registrado en la barra de url(haschange)
+  const [cart, setCart] = useState([]); //estado del carrito, inicia vacio 
 
+  /**
+   * Realiza la petición a la API mandando el parametro de producto a traer
+   * Nos devuelve el producto con el id previamente seleccionado
+   */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,12 +53,24 @@ const ItemDetail = () => {
     fetchData();
   }, [productId]);
 
+  /**
+   * se obtiene información del carrito y se guarda en localStorage
+   */
   useEffect(() => {
     // Obtener el carrito actual del localStorage
     const storedCart = JSON.parse(localStorage.getItem("cartProduct")) || [];
-    setCart(storedCart);
+    setCart(storedCart); //se actualiza carrito con su info en localStorage
   }, []);
 
+  /**
+   * Construcción de objeto para agregar al array del carrito
+   * @param {*} id 
+   * @param {*} mainPhoto 
+   * @param {*} name 
+   * @param {*} price 
+   * @param {*} category 
+   * se obtiene la info deseada a mostrar a travez de los debidos parametros
+   */
   const CartProduct = function (id, mainPhoto, name, price, category) {
     this.id = id;
     this.mainPhoto = mainPhoto;
@@ -63,6 +79,10 @@ const ItemDetail = () => {
     this.category = category;
   };
 
+  /**
+   * Función para agregar al carrito un nuevo prodcuto envuelto en un nuevo objeto
+   * Se actualiza el cart en localStorage
+   */
   const handleAddToCart = () => {
     Toast();
 
@@ -70,13 +90,14 @@ const ItemDetail = () => {
       (cartItem) => cartItem.id === product._id
     );
 
+    //mapeo de cada producto para comprar su respetivo id y verificar si es existente
     if (isProductInCart) {
       const updatedCart = cart.map((cartItem) =>
         cartItem.id === product._id
           ? { ...cartItem, quantity: cartItem.quantity + 1 }
           : cartItem
       );
-      setCart(updatedCart);
+      setCart(updatedCart); //se actualiza el carrito
 
       // Actualizar el localStorage después de actualizar el estado
       localStorage.setItem("cartProduct", JSON.stringify(updatedCart));
@@ -94,7 +115,7 @@ const ItemDetail = () => {
       // Actualizar el localStorage después de actualizar el estado
       localStorage.setItem(
         "cartProduct",
-        JSON.stringify([...cart, newCartItem])
+        JSON.stringify([...cart, newCartItem]) //se guarda en localStorage
       );
     }
   };
