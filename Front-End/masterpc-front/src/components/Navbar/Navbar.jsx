@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";  //libreria motion(animacion)
+import { motion } from "framer-motion";  //librería motion(animación)
 
 
 const navbar = () => {
   /**
-   * animacion libreria motion
+   * animación librería motion
    */
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },

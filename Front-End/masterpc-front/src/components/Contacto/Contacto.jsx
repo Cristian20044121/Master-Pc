@@ -11,6 +11,9 @@ const Contacto = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
   
+  /**
+   * Modal de contacto con campos disponibles para el usuario llenar
+   */
   const modal = ()=>{
     const { value: formValues } =  Swal.fire({
       title: "Agrega tu información",
@@ -22,9 +25,9 @@ const Contacto = () => {
       focusConfirm: false,
       preConfirm: () => {
         return [
-          document.getElementById("swal-input1").value,
-          document.getElementById("swal-input2").value,
-          document.getElementById("swal-input3").value,
+          document.getElementById("swal-input1").value, //captura info registrada por el usuario
+          document.getElementById("swal-input2").value, //captura info registrada por el usuario
+          document.getElementById("swal-input3").value, //captura info registrada por el usuario
         ];
       }
     });

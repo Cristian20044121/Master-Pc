@@ -15,7 +15,6 @@ El frontend de MasterPC es una aplicación en React diseñada para proporcionar 
 1. **Instalación de Dependencias:** Ejecuta `npm install` para instalar todas las dependencias necesarias.
 2. **Iniciar la Aplicación:** Ejecuta `npm run start` para iniciar la aplicación en modo de desarrollo.
 
-La aplicación se abrirá en tu navegador en `http://localhost:3000`.
 
 ## Estructura del Proyecto
 
